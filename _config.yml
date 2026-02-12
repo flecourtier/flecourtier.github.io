@@ -286,7 +286,7 @@ defaults:
       path: ""
       type: posters
     values:
-      layout: single
+      layout: poster
       author_profile: true
       share: true
 

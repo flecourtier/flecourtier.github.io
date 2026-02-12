@@ -7,6 +7,25 @@ author_profile: true
 
 {% include base_path %}
 
-{% for post in site.posters reversed %}
-  {% include archive-single.html %}
+{% assign poster_categories = "conference,other" | split: "," %}
+{% for category in poster_categories %}
+  {% assign title_shown = false %}
+  {% for post in site.posters reversed %}
+    {% if post.category != category %}
+      {% continue %}
+    {% endif %}
+    {% unless title_shown %}
+      {% case category %}
+        {% when "conference" %}
+          {% assign category_title = "Conferences and Workshops" %}
+        {% when "other" %}
+          {% assign category_title = "Other Posters" %}
+        {% else %}
+          {% assign category_title = category | capitalize %}
+      {% endcase %}
+      <h1 style="font-size: 1.5em; margin-top: 2em;">{{ category_title }}</h1><hr />
+      {% assign title_shown = true %}
+    {% endunless %}
+    {% include archive-single-poster.html %}
+  {% endfor %}
 {% endfor %}

@@ -19,7 +19,17 @@ author_profile: true
       {% continue %}
     {% endif %}
     {% unless title_shown %}
-      <h1 style="font-size: 1.5em; margin-top: 2em;">{{ category | capitalize }}</h1><hr />
+      {% case category %}
+        {% when "conference" %}
+          {% assign category_title = "Conferences" %}
+        {% when "non-official" %}
+          {% assign category_title = "Supplementary Talks" %}
+        {% when "other" %}
+          {% assign category_title = "Other Talks" %}
+        {% else %}
+          {% assign category_title = category | capitalize %}
+      {% endcase %}
+      <h1 style="font-size: 1.5em; margin-top: 2em;">{{ category_title }}</h1><hr />
       {% assign title_shown = true %}
     {% endunless %}
     {% include archive-single-talk.html %}

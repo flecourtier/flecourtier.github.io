@@ -40,8 +40,8 @@ layout: default
         {% endif %}
         {% if page.location %}<br><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> {{page.location}}{% endif %}
         </p>
-        {% if page.slidesurl %}
-          <p><a href="{{ page.slidesurl | prepend: base_path }}" class="btn btn--primary">Download Slides</a></p>
+        {% if page.posterurl %}
+          <p><a href="{{ page.posterurl | prepend: base_path }}" class="btn btn--primary">Download Poster</a></p>
         {% endif %}
 
         </header>
