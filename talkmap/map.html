@@ -91,7 +91,14 @@
     	</div>
 
     	<script type="text/javascript">
-    		var tiles = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+		// Check URL parameters first
+		var urlParams = new URLSearchParams(window.location.search);
+		var hidePoster = urlParams.get('hidePoster') === 'true';
+		var hideTalk = urlParams.get('hideTalk') === 'true';
+		console.log('hidePoster parameter:', hidePoster);
+		console.log('hideTalk parameter:', hideTalk);
+
+		var tiles = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
               maxZoom: 18,
               attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012'
                     }),
@@ -107,31 +114,60 @@
     		var posterMarkers = [];
 
     		// Create markers and store them by type
-    		for (var i = 0; i < addressPoints.length; i++) {
-    			var a = addressPoints[i];
-    			var title = a.description;
-    			var marker = L.marker(new L.LatLng(a.latitude, a.longitude), {
-    				title: title,
-    				icon: L.icon({
-    					iconUrl: 'data:image/svg+xml;base64,' + btoa('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 41"><path fill="' + a.color + '" d="M12.5 0C5.597 0 0 5 0 12.5 0 25 12.5 41 12.5 41s12.5-16 12.5-28.5S19.403 0 12.5 0z" stroke="white" stroke-width="1.5"/><circle cx="12.5" cy="12.5" r="5" fill="white"/></svg>'),
-    					iconSize: [25, 41],
-    					iconAnchor: [12.5, 41],
-    					popupAnchor: [0, -41]
-    				})
-    			});
-    			marker.bindPopup(title);
-    			markers.addLayer(marker);
+		for (var i = 0; i < addressPoints.length; i++) {
+			var a = addressPoints[i];
+			var title = a.description;
+			var marker = L.marker(new L.LatLng(a.latitude, a.longitude), {
+				title: title,
+				icon: L.icon({
+					iconUrl: 'data:image/svg+xml;base64,' + btoa('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 41"><path fill="' + a.color + '" d="M12.5 0C5.597 0 0 5 0 12.5 0 25 12.5 41 12.5 41s12.5-16 12.5-28.5S19.403 0 12.5 0z" stroke="white" stroke-width="1.5"/><circle cx="12.5" cy="12.5" r="5" fill="white"/></svg>'),
+					iconSize: [25, 41],
+					iconAnchor: [12.5, 41],
+					popupAnchor: [0, -41]
+				})
+			});
+			
+			// Create popup content with link
+			var popupContent = title;
+			if (a.permalink) {
+				popupContent = '<a href="' + a.permalink + '" target="_parent" style="color: #0066cc; text-decoration: none;">' + title + ' →</a>';
+			}
+			marker.bindPopup(popupContent);
 
-    			// Store marker reference by type
-    			if (a.type === 'talk') {
-    				talkMarkers.push(marker);
-    			} else if (a.type === 'poster') {
-    				posterMarkers.push(marker);
-    			}
-    		}
+			// Add all markers to group first
+			markers.addLayer(marker);
 
+			// Store marker reference by type
+			if (a.type === 'talk') {
+				talkMarkers.push(marker);
+				console.log('Talk added:', title);
+			} else if (a.type === 'poster') {
+				posterMarkers.push(marker);
+				console.log('Poster added:', title);
+			}
+		}
     		map.addLayer(markers);
     		map.zoomIn();
+
+    		// Apply URL parameter filtering AFTER map is setup
+    		setTimeout(function() {
+    			if (hidePoster) {
+    				console.log('Removing posters from map, posterMarkers count:', posterMarkers.length);
+    				document.getElementById('showPosters').checked = false;
+    				posterMarkers.forEach(function(marker) {
+    					markers.removeLayer(marker);
+    				});
+    				console.log('Posters removed');
+    			}
+    			if (hideTalk) {
+    				console.log('Removing talks from map, talkMarkers count:', talkMarkers.length);
+    				document.getElementById('showTalks').checked = false;
+    				talkMarkers.forEach(function(marker) {
+    					markers.removeLayer(marker);
+    				});
+    				console.log('Talks removed');
+    			}
+    		}, 100);
 
     		// Filter functionality
     		document.getElementById('showTalks').addEventListener('change', function() {
@@ -153,7 +189,7 @@
     				}
     			}.bind(this));
     		});
-    	</script>
+	</script>
     </body>
     </html>
     

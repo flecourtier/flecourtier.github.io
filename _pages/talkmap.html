@@ -1,9 +1,22 @@
 ---
 layout: archive
-title: "Talk map"
+title: "Map of Talks and Posters"
 permalink: /talkmap.html
 author_profile: true
 ---
 
-<p>This map is generated from a Jupyter Notebook file in <a href="https://github.com/academicpages/academicpages.github.io/blob/master/talkmap.ipynb">talkmap.ipynb</a>, which mines the location fields in the .md files in _talks/.</p>
-<iframe src="/talkmap/map.html" height="700" width="850" style="border:none;"></iframe>
+<p>Explore an interactive map showing the geographic locations where I've presented talks and posters. Use the legend on the map to filter between talks (🔴 red) and posters (🔵 blue), or click on any marker to see the event details.</p>
+
+<div style="padding: 20px 0; text-align: center;">
+  <iframe id="talkmap-frame" height="700" style="width: 100%; max-width: 900px; border: none; border-radius: 5px;"></iframe>
+</div>
+
+<p style="font-size: 0.9em; color: #666; margin-top: 20px;">
+  <strong>Tips:</strong> Zoom in/out to explore different regions, hover over clusters to see the number of events, and use the checkboxes to show or hide specific types of events.
+</p>
+
+<script>
+  // Pass URL parameters to iframe
+  var params = window.location.search;
+  document.getElementById('talkmap-frame').src = '/talkmap/map.html' + params;
+</script>

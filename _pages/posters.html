@@ -7,6 +7,12 @@ author_profile: true
 
 {% include base_path %}
 
+{% if site.talkmap_link == true %}
+
+<p><a href="/talkmap.html?hideTalk=true" style="text-decoration:none; font-size:1.2em;">🌍 See a map of all the posters I've presented!</a></p>
+
+{% endif %}
+
 {% assign poster_categories = "conference,other" | split: "," %}
 {% for category in poster_categories %}
   {% assign title_shown = false %}
