@@ -216,6 +216,36 @@
   color: var(--global-text-color);
 }
 
+/* Download button styles */
+.cv-download-links {
+  margin: 1.5rem 0 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.cv-download-button {
+  padding: 0.75em 1.75em;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  border: 1px solid var(--global-border-color) !important;
+  background-color: var(--global-base-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.cv-download-button:hover {
+  background-color: mix(white, #000, 20%);
+}
+
+@media (max-width: 48em) {
+  .cv-download-button {
+    display: inline-block;
+    width: 100%;
+    max-width: 22rem;
+  }
+}
+
 /* Print Styles */
 @media print {
   .cv-container {

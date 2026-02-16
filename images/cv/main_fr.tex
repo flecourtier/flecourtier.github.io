@@ -1,0 +1,203 @@
+% ATTENTION : modifs faites directement dans moderncv.cls et moderncvheadi.sty pour :
+% - ajouter la possibilité d'avoir deux adresses e-mail. 
+% - ajouter un espacement entre l'adresse et les autres informations personnelles dans le header.
+% - réduire l'espacement avant le nom et le titre dans le header.
+\documentclass[11pt,a4paper,sans]{moderncv}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern} % optionnel mais fiable pour le gras
+\usepackage[scale=0.85]{geometry}
+\usepackage{helvet}
+\usepackage[french]{babel}
+\usepackage{multicol}
+\usepackage{blindtext}
+\usepackage[unicode]{hyperref}
+\usepackage{amsmath}
+\usepackage{enumitem}
+
+% config 
+\moderncvstyle{classic}
+\moderncvcolor{blue}
+\setlength{\hintscolumnwidth}{2.7cm}
+
+\definecolor{link}{rgb}{0.16, 0.32, 0.75}
+
+\newcommand\Colorhref[3][link]{\href{#2}{\small\color{#1}#3}}
+
+% \makeatletter
+% \newcommand*{\emailtwo}[1]{\def\@emailtwo{#1}}
+% \patchcmd{\makecvtitle}{\emailsymbol\emaillink{\@email}}{%
+%   \emailsymbol\emaillink{\@email}%
+%   \ifdefined\@emailtwo\\\emailsymbol\emaillink{\@emailtwo}\fi%
+% }{}{}
+% \makeatother
+
+\nopagenumbers
+
+% Configuration des listes itemize
+\setlist[itemize]{leftmargin=1em, itemsep=0.3em, topsep=0.3em, label=-}
+
+% personal info 
+\name{Frédérique}{LECOURTIER}
+\title{Doctorante\\ \tiny \; \\ \tiny \;}
+\address{2 Rue Marie Hamm}{67\,000 STRASBOURG}{FRANCE}
+\phone[mobile]{(private)}
+\email{frederique.lecourtier@inria.fr}
+\emailtwo{frederique.lecourtier@gmail.com}
+\social[linkedin]{flecourtier}
+\social[github]{flecourtier}
+\extrainfo{\faGlobe~\href{https://flecourtier.github.io/}{flecourtier.github.io}}
+\photo[110pt][0pt]{Photo_CV.jpg}
+
+%programmation langage
+\colorlet{body}{black!80!white}
+\newcommand{\cvtag}[1]{%
+    \tikz[baseline]\node[anchor=base,draw=body!30,rounded corners,inner xsep=1ex,inner ysep =0.75ex,text height=1.5ex,text depth=.25ex]{#1};
+}
+
+% Commande pour lister plusieurs tags avec espacement automatique
+\usepackage{xparse}
+\NewDocumentCommand{\cvtags}{m}{%
+    \foreach \tag in {#1} {\cvtag{\tag}}\\[2mm]%
+}
+
+% Commande pour lister plusieurs items avec des points de séparation
+\newcommand{\cvsep}{\space$\boldsymbol{\cdot}$\space}
+\NewDocumentCommand{\cvitems}{m}{%
+    \foreach \item [count=\i, remember=\i as \lastn] in {#1} {%
+        \ifnum\i=1 \item \else \cvsep \item \fi%
+    }%
+}
+
+\begin{document}
+    \makecvtitle 
+    \vspace*{-2.2cm}
+    {\small\emph{(Derni\`ere modification le \today)}}
+
+    \section{Thèmes de recherche}
+
+        \cvitems{Calcul scientifique, Apprentissage automatique guidé par la physique, Analyse numérique, Méthodes des éléments finis, Solveurs hybrides, Équations aux dérivées partielles, Estimation d'erreur}
+
+    \section{Formations}
+
+        \cventry{2023 - ...}{\textbf{Doctorat}\normalfont\ en Mathématiques Appliquées}{Université de Strasbourg}{}{France}{
+            \textit{Équipe:} Mimesis, Centre Inria de l'Université de Lorraine. \\
+            \textit{Supervisé par:} Emmanuel Franck, Michel Duprez et Vanessa Lleras.
+        }
+        \cventry{2021 - 2023}{\textbf{Master}\normalfont\ Calcul Scientifique et Mathématiques de l'Information (CSMI)}{Université de Strasbourg}{}{France - Mention Bien}{}
+        \cventry{2018 - 2021}{\textbf{Licence}\normalfont\ en Mathématiques Appliquées}{Université de Strasbourg}{}{France - Mention Bien}{}
+        \cventry{2018}{\textbf{Baccalauréat}\normalfont\ Scientifique}{Lycée LeCorbusier}{Illkirch}{France}{}{}
+
+    \section{Expériences}
+
+        \cventry{2023 - ...}{Doctorat\normalfont\ en Mathématiques Appliquées}{Mimesis}{Strasbourg}{France}
+        {%
+            \cvtags{Python, PyTorch, Jax, \Colorhref{https://fenicsproject.org/}{FEniCSx}, \Colorhref{https://www.scimba.org/}{ScimBa}}
+            \textit{Sujet:} Méthodes éléments finis et réseaux de neurones pour la chirurgie augmentée. \\
+            \textit{Objectifs:}
+            \begin{itemize}
+                \item Développer des méthodes hybrides combinant les méthodes éléments finis et les réseaux de neurones pour la résolution de problèmes d'équations aux dérivées partielles paramétriques.
+                \item Développer des méthodes scientifiques d'apprentissage automatique dans ScimBa (bibliothèque Python en cours de développement dans l'équipe-projet Macaron, Inria) pour la résolution de problèmes d'équations aux dérivées partielles paramétriques.
+            \end{itemize}
+            \textcolor{link}{\faLink} \Colorhref{https://github.com/flecourtier/EnrichedFEMUsingPINNs}{Dépôt GitHub.}
+        }
+
+        \cventry{2023 \\ (6 mois)}{Stage}{Mimesis}{Strasbourg}{France}
+        {%
+            \cvtags{Python, Tensorflow, PyTorch, \Colorhref{https://olddocs.fenicsproject.org/dolfin/latest/python/}{FEniCS}, GitHub, VSCode}
+            \textit{Sujet:} Méthodes éléments finis et réseaux de neurones pour la chirurgie augmentée. \\
+            \textit{Supervisé par:} Emmanuel Franck, Michel Duprez et Vanessa Lleras. \\
+            % \textit{Objectifs:} Introduction au sujet de thèse. \\
+            \textcolor{link}{\faLink} \Colorhref{https://github.com/flecourtier/phifem_stage}{Dépôt GitHub.} \qquad \textcolor{link}{\faLink} \Colorhref{https://csmi.cemosis.fr/csmi-stages-2023/m2/_attachments/Lecourtier-Frédérique.pdf}{Rapport.}
+        }
+        \cventry{2022 \\ (2 mois)}{Stage}{Cemosis}{Strasbourg}{France}
+        {%
+            \cvtags{C++, Python, MPI, \Colorhref{https://docs.feelpp.org/home/index.html}{Feel++}, Antora, Sphinx, Doxygen, VSCode, CMake}
+            \textit{Sujet:} Méthode Parareal pour la résolution de l'équation de la chaleur en Feel++. \\
+            \textit{Supervisé par:} Christophe Prudhomme et Luca Berti. \\
+            \textit{Objectifs:}
+            \begin{itemize}
+                \item Comprendre et implémenter en Python et en C++, la méthode Parareal, méthode d'intégration parallèle en temps.
+                \item Implémenter la résolution de l'équation de la chaleur avec Feel++ (bibliothèque C++ développée dans l'équipe Cemosis, IRMA).
+            \end{itemize}
+            \textcolor{link}{\faLink} \Colorhref{https://github.com/master-csmi/2022-m1-lorenz}{Dépôt GitHub.} \qquad \textcolor{link}{\faLink} \Colorhref{https://csmi.cemosis.fr/csmi-stages-2022/m1/_attachments/Lecourtier-Frédérique.pdf}{Rapport.}
+        }
+
+    \section{Publications}
+
+        \cventry{2026}{\normalfont H. Barucq, M. Duprez, F. Faucher, E. Franck, \underline{F. Lecourtier}, V. Lleras, V. Michel-Dansac, N. Victorion. \textbf{Enriching continuous Lagrange finite element approximation spaces using neural networks}. Mathematical Modelling and Numerical Analysis (M2AN).}{}{}{}{
+            (\Colorhref{https://doi.org/10.1051/m2an/2026007}{pdf}), (\Colorhref{https://arxiv.org/abs/2502.04947}{pré-publication [arXiv}, \Colorhref{https://hal.science/hal-04935072v4/document}{HAL]})
+        }
+
+    \section{Conférences, présentations et posters}
+
+        \cventry{2026\\29 Juin-3 Juillet}{SciCADE 2026}{George Square campus}{Édimbourg}{Royaume-Uni}{
+            \textcolor{link}{\faLink} \Colorhref{https://scicade.org/}{Site web.} %\qquad \textcolor{link}{\faLink} \Colorhref{https://flecourtier.github.io/images/talks/2025_07_15.pdf}{Présentation.}
+        }
+
+        \cventry{2025\\17 Décembre}{Séminaire doctorant}{Institut IMAG}{Montpellier}{France}{
+            \textcolor{link}{\faLink} \Colorhref{https://imag.umontpellier.fr/?page_id=625&idsem=596}{Site web.} \qquad \textcolor{link}{\faLink} \Colorhref{https://flecourtier.github.io/images/talks/2025_12_17.pdf}{Présentation.}
+        }
+
+        \cventry{2025\\13-18 Juillet}{ICOSAHOM 2025}{Université McGill}{Montréal}{Canada}{
+            \textcolor{link}{\faLink} \Colorhref{https://icosahom2025.org/}{Site web.} \qquad \textcolor{link}{\faLink} \Colorhref{https://flecourtier.github.io/images/talks/2025_07_15.pdf}{Présentation.}
+        }
+
+        \cventry{2025\\24-26 Mars}{EMS-TAG-SciML-25}{École polytechnique de Milan}{Milan}{Italie}{
+            \textcolor{link}{\faLink} \Colorhref{https://www.mate.polimi.it/events/EMS-TAG-SciML-25/index.php}{Site web.} \qquad \textcolor{link}{\faLink} \Colorhref{https://flecourtier.github.io/images/posters/2025_03_24.pdf}{Poster.}
+        }
+
+        \cventry{2025\\17-21 Février}{DTE \& AICOMAS 2025}{Arts et Métiers - ENSAM}{Paris}{France}{
+            \textcolor{link}{\faLink} \Colorhref{https://dte_aicomas_2025.iacm.info/organizers}{Site web.} \qquad \textcolor{link}{\faLink} \Colorhref{https://flecourtier.github.io/images/talks/2025_02_20.pdf}{Présentation.}
+        }
+
+        \cventry{2024\\28-30 Octobre}{CJC-MA 2024}{École Normale Supérieure de Lyon}{Lyon}{France}{
+            \textcolor{link}{\faLink} \Colorhref{https://cjc-ma2024.sciencesconf.org/}{Site web.} \qquad \textcolor{link}{\faLink} \Colorhref{https://flecourtier.github.io/images/posters/2024_10_24.pdf}{Poster.}
+        }
+
+        \cventry{2024\\8-12 Juillet}{SciML 2024}{UFR de mathématique et d'informatique}{Strasbourg}{France}{
+            \textcolor{link}{\faLink} \Colorhref{https://irma.math.unistra.fr/~micheldansac/SciML2024/index.html}{Site web.} \qquad \textcolor{link}{\faLink} \Colorhref{https://flecourtier.github.io/images/posters/2024_07_08.pdf}{Poster.}
+        }
+
+    \section{Expériences d'enseignement}
+
+        \cventry{2025 - 2026}{Mission de vacation}{UFR de mathématique et d'informatique}{Strasbourg}{France}{
+            50 h de travaux pratiques en informatique - L1 (Python) / L2 (Python). \\
+            14 h de cours intégrés en informatique - L2 (Python).
+        }
+
+        \cventry{2025}{Rendez-vous des Jeunes Mathématiciennes et Informaticiennes (RJMI)}{UFR de mathématique et d'informatique}{Strasbourg}{France}{
+            Encadrement d'ateliers de recherche pour un groupe de lycéennes dans le cadre des RJMI (événement sur 3 jours).
+        }
+
+        \cventry{2024 - 2025}{Mission de vacation}{UFR de mathématique et d'informatique}{Strasbourg}{France}{
+            64 h de travaux pratiques en informatique - L1 (Python) / L2 (Python) / L3 (C++).
+        }
+
+        \cventry{2023 - 2024}{Mission de vacation}{UFR de mathématique et d'informatique}{Strasbourg}{France}{
+            50 h de travaux pratiques en informatique - L2 (Python) / L3 (C++).
+        }
+        
+    \section{Compétences}
+
+        \cvitems{GitHub, Python, C++, C, Rust, LaTeX, PyTorch, JAX, ParaView, Gmsh, FEniCS}
+
+    \section{Référents}
+
+        \textbf{Directeur de thèse:}
+
+        Emmanuel Franck : \emaillink{emmanuel.franck@inria.fr}
+        
+        \smallskip
+        \textbf{Co-encadrants de thèse:}
+
+        Michel Duprez : \emaillink{michel.duprez@inria.fr}
+
+        Vanessa Lleras : \emaillink{vanessa.lleras@umontpellier.fr}
+
+        \smallskip
+        \textbf{Collaborateur:}
+
+        Victor Michel-Dansac: \emaillink{victor.michel-dansac@inria.fr}
+
+\end{document}
