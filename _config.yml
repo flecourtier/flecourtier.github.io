@@ -156,6 +156,7 @@ include:
   - .htaccess
   - _pages
   - files
+  - talkmap
 exclude:
   - "*.sublime-project"
   - "*.sublime-workspace"
