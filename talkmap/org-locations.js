@@ -1,22 +1,44 @@
 var addressPoints = [
-  [
-    "Conference Proceeding talk 3 on Relevant Topic in Your Field<br />Testing Institute of America 2014 Annual Conference; Los Angeles, CA, USA",
-    34.0536909,
-    -118.242766
-  ],
-  [
-    "Talk 2 on Relevant Topic in Your Field<br />London School of Testing; London, UK",
-    51.5074456,
-    -0.1277653
-  ],
-  [
-    "Tutorial 1 on Relevant Topic in Your Field<br />UC-Berkeley Institute for Testing Science; Berkeley, CA, USA",
-    37.8708393,
-    -122.272863
-  ],
-  [
-    "Talk 1 on Relevant Topic in Your Field<br />UC San Francisco, Department of Testing; San Francisco, CA, USA",
-    37.7879363,
-    -122.4075201
-  ]
+  {
+    "description": "Combining Finite Element Methods and Neural Networks to Solve Elliptic Problems on 2D Geometries<br />ENSAM, Paris, France",
+    "latitude": 48.8334984,
+    "longitude": 2.3583612,
+    "type": "talk",
+    "color": "#D62828"
+  },
+  {
+    "description": "Enriching continuous Lagrange finite element approximation spaces using neural networks<br />McGill University, Montreal, Canada",
+    "latitude": 45.5068861,
+    "longitude": -73.5787118,
+    "type": "talk",
+    "color": "#D62828"
+  },
+  {
+    "description": "Enriching continuous Lagrange finite element approximation spaces using neural networks<br />IMAG, Montpellier, France",
+    "latitude": 43.3121162,
+    "longitude": 3.5457254,
+    "type": "talk",
+    "color": "#D62828"
+  },
+  {
+    "description": "Combining Finite Element methods and Neural Networks to solve elliptic problem on complex 2D geometries<br />École Normale Supérieure de Lyon, Lyon, France",
+    "latitude": 45.7297811,
+    "longitude": 4.8265819,
+    "type": "poster",
+    "color": "#2E5CA6"
+  },
+  {
+    "description": "Enriching continuous Lagrange finite element approximation spaces using neural networks<br />Politecnico di Milano, Milan, Italy",
+    "latitude": 45.4800101,
+    "longitude": 9.2282387,
+    "type": "poster",
+    "color": "#2E5CA6"
+  },
+  {
+    "description": "Combining Finite Element methods and Neural Networks to solve elliptic problem on complex 2D geometries<br />UFR, Strasbourg, France",
+    "latitude": 48.5598541,
+    "longitude": 7.7445386,
+    "type": "poster",
+    "color": "#2E5CA6"
+  }
 ];

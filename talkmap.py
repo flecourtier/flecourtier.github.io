@@ -1,28 +1,50 @@
-# Leaflet cluster map of talk locations
+# Leaflet cluster map of talk and poster locations
 #
-# Run this from the _talks/ directory, which contains .md files of all your
-# talks. This scrapes the location YAML field from each .md file, geolocates it
-# with geopy/Nominatim, and uses the getorg library to output data, HTML, and
-# Javascript for a standalone cluster map. This is functionally the same as the
-# #talkmap Jupyter notebook.
+# Scrapes the location YAML field from each .md file in _talks/ and _posters/,
+# geolocates it with geopy/Nominatim, and generates an interactive map with
+# color-coded markers (red for talks, blue for posters).
 import frontmatter
 import glob
-import getorg
+import json
+import time
+
 from geopy import Nominatim
-from geopy.exc import GeocoderTimedOut
+from geopy.exc import GeocoderTimedOut, GeocoderUnavailable
 
 # Set the default timeout, in seconds
 TIMEOUT = 5
 
-# Collect the Markdown files
-g = glob.glob("_talks/*.md")
+# Collect the Markdown files from both talks and posters
+g = glob.glob("_talks/*.md") + glob.glob("_posters/*.md")
 
 # Prepare to geolocate
 geocoder = Nominatim(user_agent="academicpages.github.io")
-location_dict = {}
+location_data = []  # List of dicts: {description, lat, lon, type, color}
 location = ""
 permalink = ""
 title = ""
+
+
+def is_virtual_location(value):
+    if not value:
+        return False
+    lowered = value.lower()
+    return "visioconf" in lowered or "visio" in lowered or "online" in lowered or "zoom" in lowered
+
+
+def geocode_with_fallback(primary, fallback):
+    for query in (primary, fallback):
+        if not query:
+            continue
+        try:
+            result = geocoder.geocode(query, timeout=TIMEOUT)
+        except (GeocoderTimedOut, GeocoderUnavailable, ValueError) as ex:
+            print(f"Error: geocode failed on input {query} with message {ex}")
+            result = None
+        time.sleep(1)
+        if result:
+            return result, query
+    return None, None
 
 # Perform geolocation
 for file in g:
@@ -30,27 +52,61 @@ for file in g:
     data = frontmatter.load(file)
     data = data.to_dict()
 
-    # Press on if the location is not present
-    if 'location' not in data:
+    # Only show items explicitly enabled for the map
+    if not data.get('showonmap', False):
         continue
 
+    # Determine type (talk or poster) and color
+    item_type = data.get('collection', 'talk')  # 'talks' or 'posters'
+    if 'poster' in item_type:
+        item_type = 'poster'
+        color = '#2E5CA6'  # Blue for posters
+    else:
+        item_type = 'talk'
+        color = '#D62828'  # Red for talks
+
     # Prepare the description
-    title = data['title'].strip()
-    venue = data['venue'].strip()
-    location = data['location'].strip()
-    description = f"{title}<br />{venue}; {location}"
+    title = data.get('title', '').strip()
+    location = data.get('location', '').strip()
+    if is_virtual_location(location):
+        location = ""
+    if location:
+        description = f"{title}<br />{location}"
+    else:
+        description = title
 
     # Geocode the location and report the status
-    try:
-        location_dict[description] = geocoder.geocode(location, timeout=TIMEOUT)
-        print(description, location_dict[description])
-    except ValueError as ex:
-        print(f"Error: geocode failed on input {location} with message {ex}")
-    except GeocoderTimedOut as ex:
-        print(f"Error: geocode timed out on input {location} with message {ex}")
-    except Exception as ex:
-        print(f"An unhandled exception occurred while processing input {location} with message {ex}")
+    result, used_query = geocode_with_fallback(location, location)
+    if not result:
+        print(f"Warning: geocode returned no result for {description}")
+        continue
+    
+    location_data.append({
+        'description': description,
+        'latitude': result.latitude,
+        'longitude': result.longitude,
+        'type': item_type,
+        'color': color
+    })
+    print(description, f"(geocoded from: {used_query})", f"[{item_type}]", result)
 
-# Save the map
-m = getorg.orgmap.create_map_obj()
-getorg.orgmap.output_html_cluster_map(location_dict, folder_name="talkmap", hashed_usernames=False)
+# Save the map data as org-locations.js
+import os
+os.makedirs('talkmap', exist_ok=True)
+
+with open('talkmap/org-locations.js', 'w', encoding='utf-8') as f:
+    f.write('var addressPoints = [\n')
+    for i, item in enumerate(location_data):
+        comma = ',' if i < len(location_data) - 1 else ''
+        f.write(f'  {{\n')
+        f.write(f'    "description": "{item["description"]}",\n')
+        f.write(f'    "latitude": {item["latitude"]},\n')
+        f.write(f'    "longitude": {item["longitude"]},\n')
+        f.write(f'    "type": "{item["type"]}",\n')
+        f.write(f'    "color": "{item["color"]}"\n')
+        f.write(f'  }}{comma}\n')
+    f.write('];\n')
+
+print(f"\nGenerated talkmap/org-locations.js with {len(location_data)} points")
+print(f"  - Talks (red): {sum(1 for x in location_data if x['type'] == 'talk')}")
+print(f"  - Posters (blue): {sum(1 for x in location_data if x['type'] == 'poster')}")

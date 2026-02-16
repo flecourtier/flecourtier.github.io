@@ -6,5 +6,6 @@ title: "Enriching continuous Lagrange finite element approximation spaces using 
 permalink: /posters/2025-03-24-workshop_milan
 date: 2025-03-24
 location: "Politecnico di Milano, Milan, Italy"
+showonmap: true
 posterurl: "/images/posters/2025_03_24.pdf"
 ---

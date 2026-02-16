@@ -14,11 +14,82 @@
     	<script src="leaflet_dist/leaflet.markercluster-src.js"></script>
     	<script src="org-locations.js"></script>
 
+    	<style>
+    		body {
+    			margin: 0;
+    			padding: 0;
+    			font-family: Arial, sans-serif;
+    		}
+    		#map {
+    			position: absolute;
+    			top: 0;
+    			bottom: 0;
+    			width: 100%;
+    		}
+    		#controls {
+    			position: absolute;
+    			top: 10px;
+    			left: 10px;
+    			background: white;
+    			padding: 15px;
+    			border-radius: 5px;
+    			box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    			z-index: 1000;
+    			max-width: 250px;
+    		}
+    		#controls h3 {
+    			margin: 0 0 10px 0;
+    			font-size: 16px;
+    			border-bottom: 2px solid #ddd;
+    			padding-bottom: 8px;
+    		}
+    		.legend-item {
+    			display: flex;
+    			align-items: center;
+    			margin-bottom: 8px;
+    			cursor: pointer;
+    		}
+    		.legend-color {
+    			width: 20px;
+    			height: 20px;
+    			border-radius: 2px;
+    			margin-right: 10px;
+    			flex-shrink: 0;
+    		}
+    		.legend-item input[type="checkbox"] {
+    			cursor: pointer;
+    			margin-right: 8px;
+    		}
+    		.legend-label {
+    			font-size: 14px;
+    			user-select: none;
+    		}
+    		.talk-color {
+    			background-color: #D62828;
+    		}
+    		.poster-color {
+    			background-color: #2E5CA6;
+    		}
+    	</style>
+
     </head>
     <body>
 
     	<div id="map"></div>
-    	<span>Mouse over a cluster to see the bounds of its children and click a cluster to zoom to those bounds</span>
+    	<div id="controls">
+    		<h3>Legend</h3>
+    		<label class="legend-item">
+    			<input type="checkbox" id="showTalks" checked>
+    			<div class="legend-color talk-color"></div>
+    			<span class="legend-label">Talks</span>
+    		</label>
+    		<label class="legend-item">
+    			<input type="checkbox" id="showPosters" checked>
+    			<div class="legend-color poster-color"></div>
+    			<span class="legend-label">Posters</span>
+    		</label>
+    	</div>
+
     	<script type="text/javascript">
     		var tiles = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
               maxZoom: 18,
@@ -30,15 +101,58 @@
     			showCoverageOnHover: false,
     			maxClusterRadius: 80
     			});
+
+    		// Store markers by type for filtering
+    		var talkMarkers = [];
+    		var posterMarkers = [];
+
+    		// Create markers and store them by type
     		for (var i = 0; i < addressPoints.length; i++) {
     			var a = addressPoints[i];
-    			var title = a[0];
-    			var marker = L.marker(new L.LatLng(a[1], a[2]), { title: title });
+    			var title = a.description;
+    			var marker = L.marker(new L.LatLng(a.latitude, a.longitude), {
+    				title: title,
+    				icon: L.icon({
+    					iconUrl: 'data:image/svg+xml;base64,' + btoa('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 41"><path fill="' + a.color + '" d="M12.5 0C5.597 0 0 5 0 12.5 0 25 12.5 41 12.5 41s12.5-16 12.5-28.5S19.403 0 12.5 0z" stroke="white" stroke-width="1.5"/><circle cx="12.5" cy="12.5" r="5" fill="white"/></svg>'),
+    					iconSize: [25, 41],
+    					iconAnchor: [12.5, 41],
+    					popupAnchor: [0, -41]
+    				})
+    			});
     			marker.bindPopup(title);
     			markers.addLayer(marker);
+
+    			// Store marker reference by type
+    			if (a.type === 'talk') {
+    				talkMarkers.push(marker);
+    			} else if (a.type === 'poster') {
+    				posterMarkers.push(marker);
+    			}
     		}
+
     		map.addLayer(markers);
     		map.zoomIn();
+
+    		// Filter functionality
+    		document.getElementById('showTalks').addEventListener('change', function() {
+    			talkMarkers.forEach(function(marker) {
+    				if (this.checked) {
+    					markers.addLayer(marker);
+    				} else {
+    					markers.removeLayer(marker);
+    				}
+    			}.bind(this));
+    		});
+
+    		document.getElementById('showPosters').addEventListener('change', function() {
+    			posterMarkers.forEach(function(marker) {
+    				if (this.checked) {
+    					markers.addLayer(marker);
+    				} else {
+    					markers.removeLayer(marker);
+    				}
+    			}.bind(this));
+    		});
     	</script>
     </body>
     </html>
