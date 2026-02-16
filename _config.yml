@@ -1,7 +1,7 @@
 # Basic Site Settings
 locale                   : "en-US"
 site_theme               : "mint"
-title                    : "Frédérique Lecourtier"
+title                    : "Home"
 title_separator          : "-"
 name                     : &name "Frédérique Lecourtier"
 description              : &description "Frédérique Lecourtier's personal website"

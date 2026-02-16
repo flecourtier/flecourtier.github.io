@@ -1,11 +1,13 @@
 ---
 permalink: /
-title: "About"
+title: "Frédérique Lecourtier"
 author_profile: true
 redirect_from: 
   - /about/
   - /about.html
 ---
+
+**Website being built.**
 
 *Currently looking for a postdoctoral position.*
 

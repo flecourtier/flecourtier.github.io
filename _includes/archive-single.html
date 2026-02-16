@@ -71,14 +71,39 @@
     <p class="archive__item-excerpt" itemprop="description"><p>{{ post.excerpt | markdownify | remove: '<p>' | remove: '</p>' }}<strong><a href="{{ base_path }}{{ post.url }}" rel="permalink"> Read more</a></strong></p></p>
     {% endif %}
     
-    {% if post.citation and post.paperurl and post.slidesurl and post.bibtexurl %}
-      <p>Recommended citation: {{ post.citation }}<br /><a href="{{ post.paperurl }}">{{ post.paperurl }}</a> | <a href="{{ post.slidesurl }}">Download Slides</a> | <a href="{{ post.bibtexurl }}">Download Bibtex</a></p>
-    {% elsif post.citation and post.paperurl and post.slidesurl %}
-      <p>Recommended citation: {{ post.citation }}<br /><a href="{{ post.paperurl }}">{{ post.paperurl }}</a> | <a href="{{ post.slidesurl }}">Download Slides</a></p>
-    {% elsif post.citation and post.paperurl and post.bibtexurl %}
-      <p>Recommended citation: {{ post.citation }}<br /><a href="{{ post.paperurl }}">{{ post.paperurl }}</a> | <a href="{{ post.bibtexurl }}">Download Bibtex</a></p>
-    {% elsif post.citation and post.paperurl %}
-      <p>Recommended citation: {{ post.citation }}<br /><a href="{{ post.paperurl }}">{{ post.paperurl }}</a></p>
+    {% assign pdf_link = post.pdfurl | default: post.paperurl %}
+    {% assign display_links = "" %}
+    {% if pdf_link %}
+      {% assign display_links = display_links | append: '<a href="' | append: pdf_link | append: '">(pdf)</a>' %}
+    {% endif %}
+    {% if post.arxivurl and post.halurl %}
+      {% if display_links != "" %}
+        {% assign display_links = display_links | append: ', ' %}
+      {% endif %}
+      {% assign display_links = display_links | append: '<a href="' | append: post.arxivurl | append: '">(preprint [arXiv,</a> <a href="' | append: post.halurl | append: '">HAL])</a>' %}
+    {% elsif post.arxivurl %}
+      {% if display_links != "" %}
+        {% assign display_links = display_links | append: ', ' %}
+      {% endif %}
+      {% assign display_links = display_links | append: '<a href="' | append: post.arxivurl | append: '">(preprint [arXiv])</a>' %}
+    {% elsif post.halurl %}
+      {% if display_links != "" %}
+        {% assign display_links = display_links | append: ', ' %}
+      {% endif %}
+      {% assign display_links = display_links | append: '<a href="' | append: post.halurl | append: '">(preprint [HAL])</a>' %}
+    {% endif %}
+    {% if display_links != "" %}
+      <p>{{ display_links }}</p>
+    {% endif %}
+
+    {% if post.citation and pdf_link and post.slidesurl and post.bibtexurl %}
+      <p>Recommended citation: {{ post.citation }}<br /><a href="{{ post.slidesurl }}">Download Slides</a> | <a href="{{ post.bibtexurl }}">Download Bibtex</a></p>
+    {% elsif post.citation and pdf_link and post.slidesurl %}
+      <p>Recommended citation: {{ post.citation }}<br /><a href="{{ post.slidesurl }}">Download Slides</a></p>
+    {% elsif post.citation and pdf_link and post.bibtexurl %}
+      <p>Recommended citation: {{ post.citation }}<br /><a href="{{ post.bibtexurl }}">Download Bibtex</a></p>
+    {% elsif post.citation and pdf_link %}
+      <p>Recommended citation: {{ post.citation }}</p>
     {% elsif post.citation and post.slidesurl and post.bibtexurl %}
       <p>Recommended citation: {{ post.citation }}<br /><a href="{{ post.slidesurl }}">Download Slides</a> | <a href="{{ post.bibtexurl}}">Download Bibtex</a></p>
     {% elsif post.citation and post.slidesurl %}
@@ -87,14 +112,6 @@
       <p>Recommended citation: {{ post.citation }}<br /><a href="{{ post.bibtexurl }}">Download Bibtex</a></p>
     {% elsif post.citation %}
       <p>Recommended citation: {{ post.citation }}</p>
-    {% elsif post.paperurl and post.slidesurl and post.bibtexurl %}
-      <p><a href=" {{ post.paperurl }} ">{{ post.paperurl }}</a> | <a href="{{ post.slidesurl }}">Download Slides</a> | <a href="{{ post.bibtexurl }}">Download Bibtex</a></p>
-    {% elsif post.paperurl and post.slidesurl %}
-      <p><a href=" {{ post.paperurl }} ">{{ post.paperurl }}</a> | <a href="{{ post.slidesurl }}">Download Slides</a></p>
-    {% elsif post.paperurl and post.bibtexurl %}
-      <p><a href=" {{ post.paperurl }} ">{{ post.paperurl }}</a> | <a href="{{ post.bibtexurl }}">Download Bibtex</a></p>
-    {% elsif post.paperurl %}
-      <p><a href=" {{ post.paperurl }} ">{{ post.paperurl }}</a></p>
     {% elsif post.slidesurl and post.bibtexurl %}
       <p><a href="{{ post.slidesurl }}">Download Slides</a> | <a href="{{ post.bibtexurl }}">Download Bibtex</a></p>
     {% elsif post.slidesurl %}
