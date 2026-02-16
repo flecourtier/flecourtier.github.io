@@ -12,5 +12,26 @@
   document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
 </script>
 
+<script>
+  (function () {
+    try {
+      var stored = localStorage.getItem("theme");
+      var theme = (stored === "dark" || stored === "light" || stored === "system") ? stored : "system";
+      var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+      var computed = (theme === "system") ? (prefersDark ? "dark" : "light") : theme;
+      if (computed === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    } catch (e) {
+      // Ignore errors to avoid blocking page render.
+    }
+  })();
+</script>
+
+<style>
+  html { background-color: #ffffff; }
+  html[data-theme="dark"] { background-color: #1a2421; }
+</style>
+
 <!-- For all browsers -->
 <link rel="stylesheet" href="{{ base_path }}/assets/css/main.css">
