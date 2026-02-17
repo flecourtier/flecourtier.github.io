@@ -34,7 +34,10 @@
       {% endif %}
     </h3>
     {% if post.date %}<p class="page__meta"><i class="fa fa-clock" aria-hidden="true"></i> {{ post.date | date: '%B %d, %Y' }}</p>{% endif %}
-    {% if post.venue%}<p class="archive__item-excerpt" itemprop="description">{{post.type}} at {{ post.venue }},  {{post.location}}</p>{% endif %}
+    {% assign display_location = post.location_display | default: post.location %}
+    {% if post.venue %}
+      <p class="archive__item-excerpt" itemprop="description">{{ post.type }} at {{ post.venue }}, {{ display_location }}</p>
+    {% endif %}
     </li>
   </article>
 </div>

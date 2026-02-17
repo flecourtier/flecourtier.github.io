@@ -38,7 +38,8 @@
       <p class="page__meta"><i class="fa fa-clock" aria-hidden="true"></i> {% include read-time.html %}</p>
     {% endif %}
     {% if post.date %}<p class="page__meta"><i class="fa fa-clock" aria-hidden="true"></i> {{ post.date | date: '%B %d, %Y' }}</p>{% endif %}
-    {% if post.location %}<p class="page__meta"><i class="fa fa-map-marker" aria-hidden="true"></i> {{post.location}}</p>{% endif %}
+    {% assign display_location = post.location_display | default: post.location %}
+    {% if display_location %}<p class="page__meta"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ display_location }}</p>{% endif %}
     {% if post.posterurl %}
       <p><a href="{{ post.posterurl | prepend: base_path }}">Download Poster</a></p>
     {% endif %}

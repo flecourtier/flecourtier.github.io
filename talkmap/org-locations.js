@@ -16,9 +16,9 @@ var addressPoints = [
     "permalink": "/talks/2025-07-15-ICOSAHOM"
   },
   {
-    "description": "Enriching continuous Lagrange finite element approximation spaces using neural networks<br />IMAG, Montpellier, France",
-    "latitude": 43.3121162,
-    "longitude": 3.5457254,
+    "description": "Enriching continuous Lagrange finite element approximation spaces using neural networks<br />Institut Montpelliérain Alexander Grothendieck (IMAG), Montpellier, France",
+    "latitude": 43.6321029,
+    "longitude": 3.8642865,
     "type": "talk",
     "color": "#D62828",
     "permalink": "/talks/2025-12-17-Montpellier"

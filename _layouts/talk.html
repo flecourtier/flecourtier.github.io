@@ -38,7 +38,8 @@ layout: default
         {% elsif page.date %}
           <i class="fa fa-fw fa-calendar" aria-hidden="true"></i> {{ page.date | date: "%B %d, %Y" }}
         {% endif %}
-        {% if page.location %}<br><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> {{page.location}}{% endif %}
+        {% assign display_location = page.location_display | default: page.location %}
+        {% if display_location %}<br><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> {{ display_location }}{% endif %}
         </p>
         {% if page.slidesurl %}
           <p><a href="{{ page.slidesurl | prepend: base_path }}" class="btn btn--primary">Download Slides</a></p>

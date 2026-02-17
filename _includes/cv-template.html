@@ -186,8 +186,9 @@
         </div>
         <div class="cv-item-content">
           <div class="cv-item-subtitle">{{ talk.event }}</div>
-          {% if talk.location %}
-          <div class="cv-item-detail">{{ talk.location }}</div>
+          {% assign display_location = talk.location_display | default: talk.location %}
+          {% if display_location %}
+          <div class="cv-item-detail">{{ display_location }}</div>
           {% endif %}
           {% if talk.description %}
           <div class="cv-item-detail">{{ talk.description }}</div>

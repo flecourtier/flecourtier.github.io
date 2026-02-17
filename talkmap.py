@@ -65,13 +65,16 @@ for file in g:
         item_type = 'talk'
         color = '#D62828'  # Red for talks
 
-    # Prepare the description
+    # Prepare the description (display can differ from geocoding input)
     title = data.get('title', '').strip()
     location = data.get('location', '').strip()
+    display_location = data.get('location_display', '').strip()
     if is_virtual_location(location):
         location = ""
-    if location:
-        description = f"{title}<br />{location}"
+    if not display_location:
+        display_location = location
+    if display_location:
+        description = f"{title}<br />{display_location}"
     else:
         description = title
 
@@ -81,12 +84,16 @@ for file in g:
         print(f"Warning: geocode returned no result for {description}")
         continue
     
+    # Get permalink for link to full page
+    permalink = data.get('permalink', '')
+
     location_data.append({
         'description': description,
         'latitude': result.latitude,
         'longitude': result.longitude,
         'type': item_type,
-        'color': color
+        'color': color,
+        'permalink': permalink
     })
     print(description, f"(geocoded from: {used_query})", f"[{item_type}]", result)
 
@@ -103,7 +110,8 @@ with open('talkmap/org-locations.js', 'w', encoding='utf-8') as f:
         f.write(f'    "latitude": {item["latitude"]},\n')
         f.write(f'    "longitude": {item["longitude"]},\n')
         f.write(f'    "type": "{item["type"]}",\n')
-        f.write(f'    "color": "{item["color"]}"\n')
+        f.write(f'    "color": "{item["color"]}",\n')
+        f.write(f'    "permalink": "{item["permalink"]}"\n')
         f.write(f'  }}{comma}\n')
     f.write('];\n')
 
