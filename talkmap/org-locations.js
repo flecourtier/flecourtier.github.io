@@ -1,5 +1,13 @@
 var addressPoints = [
   {
+    "description": "Enriching continuous Lagrange finite element approximation spaces using neural networks<br />Institut Montpelliérain Alexander Grothendieck (IMAG), Montpellier, France",
+    "latitude": 43.6321029,
+    "longitude": 3.8642865,
+    "type": "talk",
+    "color": "#D62828",
+    "permalink": "/talks/2025-12-17-Montpellier"
+  },
+  {
     "description": "Combining Finite Element Methods and Neural Networks to Solve Elliptic Problems on 2D Geometries<br />ENSAM, Paris, France",
     "latitude": 48.8334984,
     "longitude": 2.3583612,
@@ -16,22 +24,6 @@ var addressPoints = [
     "permalink": "/talks/2025-07-15-ICOSAHOM"
   },
   {
-    "description": "Enriching continuous Lagrange finite element approximation spaces using neural networks<br />Institut Montpelliérain Alexander Grothendieck (IMAG), Montpellier, France",
-    "latitude": 43.6321029,
-    "longitude": 3.8642865,
-    "type": "talk",
-    "color": "#D62828",
-    "permalink": "/talks/2025-12-17-Montpellier"
-  },
-  {
-    "description": "Combining Finite Element methods and Neural Networks to solve elliptic problem on complex 2D geometries<br />École Normale Supérieure de Lyon, Lyon, France",
-    "latitude": 45.7297811,
-    "longitude": 4.8265819,
-    "type": "poster",
-    "color": "#2E5CA6",
-    "permalink": "/posters/2024-10-29-CJCMA"
-  },
-  {
     "description": "Enriching continuous Lagrange finite element approximation spaces using neural networks<br />Politecnico di Milano, Milan, Italy",
     "latitude": 45.4800101,
     "longitude": 9.2282387,
@@ -46,5 +38,13 @@ var addressPoints = [
     "type": "poster",
     "color": "#2E5CA6",
     "permalink": "/posters/2024-07-08-workshop_stras"
+  },
+  {
+    "description": "Combining Finite Element methods and Neural Networks to solve elliptic problem on complex 2D geometries<br />École Normale Supérieure de Lyon, Lyon, France",
+    "latitude": 45.7297811,
+    "longitude": 4.8265819,
+    "type": "poster",
+    "color": "#2E5CA6",
+    "permalink": "/posters/2024-10-29-CJCMA"
   }
 ];
