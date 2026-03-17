@@ -237,7 +237,6 @@ NameError: name 'y' is not defined</pre>
 (function () {
   const storageKeyCode = "bugLabCodeV1";
   const storageKeyStep = "bugLabStepV1";
-  const storageKeyHoldStepZero = "bugLabHoldStepZeroV1";
   const scriptPath = "/files/teaching/learn-to-fix-bug.py";
 
   let baseCode = "";
@@ -294,10 +293,7 @@ NameError: name 'y' is not defined</pre>
 
   let codeEditor = null;
   let pyodide = null;
-  let step = Number(localStorage.getItem(storageKeyStep) || "0");
-  if (!Number.isInteger(step) || step < 0 || step > bugStages.length + 1) {
-    step = 0;
-  }
+  let step = 0;
 
   function setMessage(text, kind) {
     message.textContent = text;
@@ -404,7 +400,6 @@ NameError: name 'y' is not defined</pre>
     }
 
     if (step === 0) {
-      localStorage.removeItem(storageKeyHoldStepZero);
       step = 1;
       localStorage.setItem(storageKeyStep, String(step));
       refreshUi();
@@ -492,7 +487,6 @@ NameError: name 'y' is not defined</pre>
   async function resetAll() {
     localStorage.removeItem(storageKeyCode);
     localStorage.removeItem(storageKeyStep);
-    localStorage.setItem(storageKeyHoldStepZero, "1");
     step = 0;
     codeEditor.setValue(baseCode);
     setOutput("");
@@ -546,11 +540,7 @@ NameError: name 'y' is not defined</pre>
       }
       validateButton.disabled = false;
       if (step === 0) {
-        if (localStorage.getItem(storageKeyHoldStepZero) === "1") {
-          setMessage("Lis les consignes puis valide l'étape 0.", "warning");
-        } else {
-          await checkCurrentStep();
-        }
+        setMessage("Lis les consignes puis valide l'etape 0.", "warning");
       } else if (step < bugStages.length + 1) {
         setMessage("Corrige le bug courant puis clique sur Valider.", "warning");
       } else {
