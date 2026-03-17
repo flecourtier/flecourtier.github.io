@@ -333,6 +333,12 @@ NameError: name 'y' is not defined</pre>
     output.textContent = text;
   }
 
+  function normalizeTraceback(text) {
+    return String(text || "")
+      .replace(/File "<string>"/g, 'File "TP1.py"')
+      .replace(/File "<exec>"/g, 'File "TP1.py"');
+  }
+
   function setFinalBannerVisible(isVisible) {
     finalBanner.classList.toggle("is-hidden", !isVisible);
   }
@@ -425,10 +431,7 @@ NameError: name 'y' is not defined</pre>
       "        compiled = compile(student_code, filename, 'exec')",
       "        exec(compiled, {'__name__': '__main__'})",
       "except BaseException as e:",
-      "    tb = e.__traceback__",
-      "    while tb is not None and tb.tb_frame.f_code.co_filename in ('<exec>', '<string>'):",
-      "        tb = tb.tb_next",
-      "    formatted_tb = ''.join(traceback.format_exception(e.__class__, e, tb))",
+      "    formatted_tb = traceback.format_exc()",
       "    result = {'ok': False, 'type': e.__class__.__name__, 'message': str(e), 'traceback': formatted_tb, 'stdout': stdout_buffer.getvalue(), 'stderr': stderr_buffer.getvalue()}",
       "else:",
       "    result = {'ok': True, 'type': '', 'message': '', 'traceback': '', 'stdout': stdout_buffer.getvalue(), 'stderr': stderr_buffer.getvalue()}",
@@ -456,7 +459,7 @@ NameError: name 'y' is not defined</pre>
       }
 
       trace.classList.remove("is-hidden");
-      setTraceback(result.traceback);
+      setTraceback(normalizeTraceback(result.traceback));
 
       if (bugIndex === -2) {
         setMessage("Erreur inattendue. Lis la traceback ci-dessous et corrige ce point.", "error");
@@ -481,9 +484,10 @@ NameError: name 'y' is not defined</pre>
       refreshUi();
       setMessage("Presque... un bug precedent est revenu. Corrige-le d'abord.", "warning");
     } catch (err) {
-      setTraceback(String(err || ""));
+      trace.classList.remove("is-hidden");
+      setTraceback(String((err && (err.stack || err.message)) || err || ""));
       setOutput("");
-      setMessage("Erreur d'execution cote navigateur. Reessaye encore.", "error");
+      setMessage("Erreur d'execution cote navigateur: " + String((err && err.message) || err || "inconnue"), "error");
     }
   }
 
