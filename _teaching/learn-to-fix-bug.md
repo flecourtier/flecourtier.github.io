@@ -57,6 +57,7 @@ NameError: name 'y' is not defined</pre>
   border-radius: 12px;
   padding: 1rem;
   background: linear-gradient(165deg, #fbfcfe 0%, #f1f5fb 100%);
+  color: #1f2a38;
 }
 
 .bug-lab__status {
@@ -153,7 +154,27 @@ NameError: name 'y' is not defined</pre>
   padding: 0.7rem 0.85rem;
   border-radius: 8px;
   min-height: 2.2rem;
+  border-left: 4px solid #b8c4d6;
   background: #e7eef7;
+  color: #1f2a38;
+}
+
+.bug-lab__message--success {
+  background: #e5f6ea;
+  color: #163726;
+  border-left-color: #1f7a4a;
+}
+
+.bug-lab__message--warning {
+  background: #fff6dd;
+  color: #4f3b0b;
+  border-left-color: #b58a1d;
+}
+
+.bug-lab__message--error {
+  background: #fbe9e9;
+  color: #5a1d1d;
+  border-left-color: #a62e2e;
 }
 
 .bug-lab__instructions {
@@ -162,6 +183,7 @@ NameError: name 'y' is not defined</pre>
   border-radius: 8px;
   border: 1px solid #cfd9e8;
   background: #f5f9ff;
+  color: #1f2a38;
 }
 
 .bug-lab__instructions ul {
@@ -187,6 +209,7 @@ NameError: name 'y' is not defined</pre>
   font-family: "Fira Code", "Consolas", monospace;
   font-size: 0.83rem;
   white-space: pre-wrap;
+  color: #1f2a38;
 }
 
 .bug-lab__example {
@@ -209,6 +232,7 @@ NameError: name 'y' is not defined</pre>
   font-size: 0.85rem;
   white-space: pre-wrap;
   display: none;
+  color: #1f2a38;
 }
 
 .bug-lab__output {
@@ -221,10 +245,268 @@ NameError: name 'y' is not defined</pre>
   font-size: 0.85rem;
   white-space: pre-wrap;
   display: none;
+  color: #1f2a38;
+}
+
+#bug-lab-step {
+  color: #1f2a38;
+}
+
+.bug-lab code,
+.bug-lab strong {
+  color: inherit;
 }
 
 .is-hidden {
   display: none !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .bug-lab {
+    border-color: #2f3948;
+    background: linear-gradient(165deg, #121821 0%, #0d131b 100%);
+    color: #e6edf7;
+  }
+
+  .bug-lab__toolbar {
+    color: #d7e2f2;
+  }
+
+  .bug-lab__toolbar button {
+    color: #f3f7ff;
+  }
+
+  #bug-lab-validate {
+    background: #1f8a56;
+  }
+
+  #bug-lab-validate:disabled {
+    background: #47645a;
+    color: #d6dfda;
+  }
+
+  #bug-lab-reset,
+  #bug-lab-undo,
+  #bug-lab-redo {
+    background: #3b495e;
+  }
+
+  .bug-lab__editor-wrap {
+    border-color: #2f3d50;
+    background: #141b25;
+  }
+
+  .CodeMirror {
+    background: #141b25;
+    color: #e7eef9;
+  }
+
+  .CodeMirror-cursor {
+    border-left-color: #d7e6ff;
+  }
+
+  .CodeMirror-gutters {
+    border-right-color: #2a3648;
+    background: #101722;
+  }
+
+  .CodeMirror-linenumber {
+    color: #8da2bf;
+  }
+
+  .bug-lab__message {
+    background: #1a2433;
+    color: #dce8fa;
+  }
+
+  .bug-lab__instructions {
+    border-color: #2f425d;
+    background: #121d2b;
+    color: #dce8fa;
+  }
+
+  .bug-lab__example {
+    border-color: #344861;
+    background: #182434;
+    color: #dce8fa;
+  }
+
+  .bug-lab__example-trace {
+    border-color: #5a4040;
+    background: #2a1d1d;
+    color: #ffe1e1;
+  }
+
+  .bug-lab__trace {
+    border-color: #3c4b60;
+    background: #111925;
+    color: #d7e2f2;
+  }
+
+  .bug-lab__output {
+    border-color: #445844;
+    background: #152117;
+    color: #d9f3de;
+  }
+
+  .bug-lab__final {
+    border-color: #2da66a;
+    background: linear-gradient(180deg, #173024 0%, #12271d 100%);
+    color: #b8f2cd;
+  }
+}
+
+html[data-theme="dark"] .bug-lab {
+  border-color: #2f3948;
+  background: linear-gradient(165deg, #121821 0%, #0d131b 100%);
+  color: #e6edf7;
+}
+
+html[data-theme="dark"] #bug-lab-step,
+html[data-theme="dark"] .bug-lab__message,
+html[data-theme="dark"] .bug-lab__instructions,
+html[data-theme="dark"] .bug-lab__example,
+html[data-theme="dark"] .bug-lab__example-trace,
+html[data-theme="dark"] .bug-lab__trace,
+html[data-theme="dark"] .bug-lab__output,
+html[data-theme="dark"] .bug-lab code,
+html[data-theme="dark"] .bug-lab strong {
+  color: #dce8fa;
+}
+
+html[data-theme="dark"] .bug-lab__editor-wrap {
+  border-color: #2f3d50;
+  background: #141b25;
+}
+
+html[data-theme="dark"] .CodeMirror {
+  background: #141b25;
+  color: #e7eef9;
+}
+
+html[data-theme="dark"] .CodeMirror-cursor {
+  border-left-color: #d7e6ff;
+}
+
+html[data-theme="dark"] .CodeMirror-gutters {
+  border-right-color: #2a3648;
+  background: #101722;
+}
+
+html[data-theme="dark"] .CodeMirror-linenumber {
+  color: #8da2bf;
+}
+
+html[data-theme="dark"] .cm-s-eclipse.CodeMirror {
+  background: #141b25;
+  color: #e7eef9;
+}
+
+html[data-theme="dark"] .cm-s-eclipse span {
+  color: #e7eef9;
+}
+
+html[data-theme="dark"] .cm-s-eclipse .CodeMirror-selected {
+  background: #23344b;
+}
+
+html[data-theme="dark"] .cm-s-eclipse .cm-comment {
+  color: #90a7c4;
+}
+
+html[data-theme="dark"] .cm-s-eclipse .cm-keyword {
+  color: #ff7ab6;
+  font-weight: 600;
+}
+
+html[data-theme="dark"] .cm-s-eclipse .cm-def {
+  color: #7cc7ff;
+}
+
+html[data-theme="dark"] .cm-s-eclipse .cm-variable,
+html[data-theme="dark"] .cm-s-eclipse .cm-variable-2,
+html[data-theme="dark"] .cm-s-eclipse .cm-variable-3 {
+  color: #e7eef9;
+}
+
+html[data-theme="dark"] .cm-s-eclipse .cm-property,
+html[data-theme="dark"] .cm-s-eclipse .cm-attribute,
+html[data-theme="dark"] .cm-s-eclipse .cm-qualifier {
+  color: #f3f7ff;
+}
+
+html[data-theme="dark"] .cm-s-eclipse .cm-number {
+  color: #f7c56d;
+}
+
+html[data-theme="dark"] .cm-s-eclipse .cm-string,
+html[data-theme="dark"] .cm-s-eclipse .cm-string-2 {
+  color: #9be38e;
+}
+
+html[data-theme="dark"] .cm-s-eclipse .cm-operator,
+html[data-theme="dark"] .cm-s-eclipse .cm-meta {
+  color: #f4f7ff;
+}
+
+html[data-theme="dark"] .cm-s-eclipse .cm-builtin,
+html[data-theme="dark"] .cm-s-eclipse .cm-atom {
+  color: #7ed0ff;
+}
+
+html[data-theme="dark"] .bug-lab__message {
+  background: #1a2433;
+}
+
+html[data-theme="dark"] .bug-lab__message--success {
+  background: #173327;
+  color: #d5f7e2;
+  border-left-color: #2da66a;
+}
+
+html[data-theme="dark"] .bug-lab__message--warning {
+  background: #3b3216;
+  color: #fff1c7;
+  border-left-color: #d0a43a;
+}
+
+html[data-theme="dark"] .bug-lab__message--error {
+  background: #3a1f23;
+  color: #ffdfe3;
+  border-left-color: #d36a73;
+}
+
+html[data-theme="dark"] .bug-lab__instructions {
+  border-color: #2f425d;
+  background: #121d2b;
+}
+
+html[data-theme="dark"] .bug-lab__example {
+  border-color: #344861;
+  background: #182434;
+}
+
+html[data-theme="dark"] .bug-lab__example-trace {
+  border-color: #5a4040;
+  background: #2a1d1d;
+  color: #ffe1e1;
+}
+
+html[data-theme="dark"] .bug-lab__trace {
+  border-color: #3c4b60;
+  background: #111925;
+}
+
+html[data-theme="dark"] .bug-lab__output {
+  border-color: #445844;
+  background: #152117;
+  color: #d9f3de;
+}
+
+html[data-theme="dark"] .bug-lab__final {
+  border-color: #2da66a;
+  background: linear-gradient(180deg, #173024 0%, #12271d 100%);
+  color: #b8f2cd;
 }
 </style>
 
@@ -297,15 +579,14 @@ NameError: name 'y' is not defined</pre>
 
   function setMessage(text, kind) {
     message.textContent = text;
+    message.classList.remove("bug-lab__message--success", "bug-lab__message--warning", "bug-lab__message--error");
+
     if (kind === "success") {
-      message.style.background = "#e5f6ea";
-      message.style.borderLeft = "4px solid #1f7a4a";
+      message.classList.add("bug-lab__message--success");
     } else if (kind === "warning") {
-      message.style.background = "#fff6dd";
-      message.style.borderLeft = "4px solid #b58a1d";
+      message.classList.add("bug-lab__message--warning");
     } else {
-      message.style.background = "#fbe9e9";
-      message.style.borderLeft = "4px solid #a62e2e";
+      message.classList.add("bug-lab__message--error");
     }
   }
 
