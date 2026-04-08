@@ -244,3 +244,17 @@
     }
   }
 }
+
+.upcoming-badge {
+  display: inline-block;
+  background-color: var(--global-link-color);
+  color: #fff;
+  font-size: 0.65em;
+  font-weight: bold;
+  padding: 0.15em 0.5em;
+  border-radius: 3px;
+  vertical-align: middle;
+  margin-right: 0.5em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
