@@ -7,6 +7,7 @@ import frontmatter
 import glob
 import json
 import time
+from datetime import date
 
 from geopy import Nominatim
 from geopy.exc import GeocoderTimedOut, GeocoderUnavailable
@@ -58,12 +59,18 @@ for file in g:
 
     # Determine type (talk or poster) and color
     item_type = data.get('collection', 'talk')  # 'talks' or 'posters'
+    item_date = data.get('date', None)
+    if hasattr(item_date, 'date'):
+        item_date = item_date.date()
+    elif isinstance(item_date, str):
+        item_date = date.fromisoformat(item_date)
+    upcoming = item_date is not None and item_date > date.today()
     if 'poster' in item_type:
         item_type = 'poster'
-        color = '#2E5CA6'  # Blue for posters
+        color = '#00A896' if upcoming else '#2E5CA6'  # Cyan for upcoming, blue for past
     else:
         item_type = 'talk'
-        color = '#D62828'  # Red for talks
+        color = '#FF8C00' if upcoming else '#D62828'  # Orange for upcoming, red for past
 
     # Prepare the description (display can differ from geocoding input)
     title = data.get('title', '').strip()
@@ -92,6 +99,7 @@ for file in g:
         'latitude': result.latitude,
         'longitude': result.longitude,
         'type': item_type,
+        'upcoming': upcoming,
         'color': color,
         'permalink': permalink
     })
@@ -110,6 +118,7 @@ with open('talkmap/org-locations.js', 'w', encoding='utf-8') as f:
         f.write(f'    "latitude": {item["latitude"]},\n')
         f.write(f'    "longitude": {item["longitude"]},\n')
         f.write(f'    "type": "{item["type"]}",\n')
+        f.write(f'    "upcoming": {"true" if item["upcoming"] else "false"},\n')
         f.write(f'    "color": "{item["color"]}",\n')
         f.write(f'    "permalink": "{item["permalink"]}"\n')
         f.write(f'  }}{comma}\n')

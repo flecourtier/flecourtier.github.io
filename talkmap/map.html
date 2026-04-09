@@ -70,8 +70,14 @@
     		.talk-color {
     			background-color: #D62828;
     		}
+    		.talk-upcoming-color {
+    			background-color: #FF8C00;
+    		}
     		.poster-color {
     			background-color: #2E5CA6;
+    		}
+    		.poster-upcoming-color {
+    			background-color: #00A896;
     		}
     	</style>
 
@@ -87,9 +93,19 @@
     			<span class="legend-label">Talks</span>
     		</label>
     		<label class="legend-item">
+    			<input type="checkbox" id="showTalksUpcoming" checked>
+    			<div class="legend-color talk-upcoming-color"></div>
+    			<span class="legend-label">Upcoming talks</span>
+    		</label>
+    		<label class="legend-item">
     			<input type="checkbox" id="showPosters" checked>
     			<div class="legend-color poster-color"></div>
     			<span class="legend-label">Posters</span>
+    		</label>
+    		<label class="legend-item">
+    			<input type="checkbox" id="showPostersUpcoming" checked>
+    			<div class="legend-color poster-upcoming-color"></div>
+    			<span class="legend-label">Upcoming posters</span>
     		</label>
     	</div>
 
@@ -114,7 +130,9 @@
 
     		// Store markers by type for filtering
     		var talkMarkers = [];
+    		var talkUpcomingMarkers = [];
     		var posterMarkers = [];
+    		var posterUpcomingMarkers = [];
 
     		// Create markers and store them by type
 		for (var i = 0; i < addressPoints.length; i++) {
@@ -141,12 +159,14 @@
 			markers.addLayer(marker);
 
 			// Store marker reference by type
-			if (a.type === 'talk') {
+			if (a.type === 'talk' && !a.upcoming) {
 				talkMarkers.push(marker);
-				console.log('Talk added:', title);
-			} else if (a.type === 'poster') {
+			} else if (a.type === 'talk' && a.upcoming) {
+				talkUpcomingMarkers.push(marker);
+			} else if (a.type === 'poster' && !a.upcoming) {
 				posterMarkers.push(marker);
-				console.log('Poster added:', title);
+			} else if (a.type === 'poster' && a.upcoming) {
+				posterUpcomingMarkers.push(marker);
 			}
 		}
     		map.addLayer(markers);
@@ -155,42 +175,49 @@
     		// Apply URL parameter filtering AFTER map is setup
     		setTimeout(function() {
     			if (hidePoster) {
-    				console.log('Removing posters from map, posterMarkers count:', posterMarkers.length);
     				document.getElementById('showPosters').checked = false;
+    				document.getElementById('showPostersUpcoming').checked = false;
     				posterMarkers.forEach(function(marker) {
     					markers.removeLayer(marker);
     				});
-    				console.log('Posters removed');
+    				posterUpcomingMarkers.forEach(function(marker) {
+    					markers.removeLayer(marker);
+    				});
     			}
     			if (hideTalk) {
-    				console.log('Removing talks from map, talkMarkers count:', talkMarkers.length);
     				document.getElementById('showTalks').checked = false;
+    				document.getElementById('showTalksUpcoming').checked = false;
     				talkMarkers.forEach(function(marker) {
     					markers.removeLayer(marker);
     				});
-    				console.log('Talks removed');
+    				talkUpcomingMarkers.forEach(function(marker) {
+    					markers.removeLayer(marker);
+    				});
     			}
     		}, 100);
 
     		// Filter functionality
-    		document.getElementById('showTalks').addEventListener('change', function() {
-    			talkMarkers.forEach(function(marker) {
-    				if (this.checked) {
+    		function toggleMarkers(markerList, checked) {
+    			markerList.forEach(function(marker) {
+    				if (checked) {
     					markers.addLayer(marker);
     				} else {
     					markers.removeLayer(marker);
     				}
-    			}.bind(this));
-    		});
+    			});
+    		}
 
+    		document.getElementById('showTalks').addEventListener('change', function() {
+    			toggleMarkers(talkMarkers, this.checked);
+    		});
+    		document.getElementById('showTalksUpcoming').addEventListener('change', function() {
+    			toggleMarkers(talkUpcomingMarkers, this.checked);
+    		});
     		document.getElementById('showPosters').addEventListener('change', function() {
-    			posterMarkers.forEach(function(marker) {
-    				if (this.checked) {
-    					markers.addLayer(marker);
-    				} else {
-    					markers.removeLayer(marker);
-    				}
-    			}.bind(this));
+    			toggleMarkers(posterMarkers, this.checked);
+    		});
+    		document.getElementById('showPostersUpcoming').addEventListener('change', function() {
+    			toggleMarkers(posterUpcomingMarkers, this.checked);
     		});
 	</script>
     </body>
