@@ -1,5 +1,21 @@
 var addressPoints = [
   {
+    "description": "Combining Finite Element Methods and Neural Networks to Solve Elliptic Problems on 2D Geometries<br />ENSAM, Paris, France",
+    "latitude": 48.8334984,
+    "longitude": 2.3583612,
+    "type": "talk",
+    "color": "#D62828",
+    "permalink": "/talks/2025-02-20-DTE_AICOMAS"
+  },
+  {
+    "description": "Enriching continuous Lagrange finite element approximation spaces using neural networks<br />Saint-Jacut-de-la-Mer, France",
+    "latitude": 48.601608,
+    "longitude": -2.187603,
+    "type": "talk",
+    "color": "#D62828",
+    "permalink": "/talks/2026-06-04-CANUM"
+  },
+  {
     "description": "Enriching continuous Lagrange finite element approximation spaces using neural networks<br />Institut Montpelliérain Alexander Grothendieck (IMAG), Montpellier, France",
     "latitude": 43.6321029,
     "longitude": 3.8642865,
@@ -8,20 +24,12 @@ var addressPoints = [
     "permalink": "/talks/2025-12-17-Montpellier"
   },
   {
-    "description": "Enriching continuous Lagrange finite element approximation spaces using neural networks<br />Saint-Jacut-de-la-Mer, France",
-    "latitude": 48.601608,
-    "longitude": -2.187603,
-    "type": "talk",
-    "color": "#FF8C00",
-    "permalink": "/talks/2026-06-01-CANUM"
-  },
-  {
     "description": "Enriching continuous Lagrange finite element approximation spaces using neural networks<br />Edinburgh, United Kingdom",
     "latitude": 55.9533456,
     "longitude": -3.1883749,
     "type": "talk",
-    "color": "#FF8C00",
-    "permalink": "/talks/2026-06-29-SciCADE"
+    "color": "#D62828",
+    "permalink": "/talks/2026-07-03-SciCADE"
   },
   {
     "description": "Enriching continuous Lagrange finite element approximation spaces using neural networks<br />McGill University, Montreal, Canada",
@@ -30,14 +38,6 @@ var addressPoints = [
     "type": "talk",
     "color": "#D62828",
     "permalink": "/talks/2025-07-15-ICOSAHOM"
-  },
-  {
-    "description": "Combining Finite Element Methods and Neural Networks to Solve Elliptic Problems on 2D Geometries<br />ENSAM, Paris, France",
-    "latitude": 48.8334984,
-    "longitude": 2.3583612,
-    "type": "talk",
-    "color": "#D62828",
-    "permalink": "/talks/2025-02-20-DTE_AICOMAS"
   },
   {
     "description": "Combining Finite Element methods and Neural Networks to solve elliptic problem on complex 2D geometries<br />École Normale Supérieure de Lyon, Lyon, France",
